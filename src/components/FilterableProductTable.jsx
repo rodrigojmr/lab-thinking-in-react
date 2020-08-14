@@ -10,55 +10,39 @@ class FilterableProductTable extends Component {
     this.state = {
       products: this.props.products.data,
       inStock: false,
-      searchVal: '',
+      searchQuery: '',
     };
   }
 
-  handleSearch = (value) => {
-    if (!value && !this.state.inStock) {
-      this.setState({
-        products: this.props.products.data,
-        searchVal: value,
-      });
-    } else {
-      let filteredProducts;
-      if (!value && this.state.inStock) {
-        filteredProducts = this.props.products.data.filter(
-          (product) => product.stocked
-        );
-      } else if (value && this.state.inStock) {
-        filteredProducts = this.props.products.data.filter(
-          (product) =>
-            product.name.toLowerCase().includes(value.toLowerCase()) &&
-            product.stocked
-        );
-      } else if (value) {
-        filteredProducts = this.props.products.data.filter((product) =>
-          product.name.toLowerCase().includes(value.toLowerCase())
-        );
-      }
-      this.setState({
-        products: filteredProducts,
-        searchVal: value,
-      });
-    }
+  setSearchVal = (value) => {
+    this.setState({
+      searchQuery: value,
+    });
   };
 
   toggleStock = () => {
     this.setState({
       inStock: !this.state.inStock,
     });
-    setTimeout(() => {
-      this.handleSearch(this.state.searchVal);
-    }, 100);
+  };
+
+  filterList = () => {
+    const searchTerm = this.state.searchQuery.toLowerCase();
+    return this.state.products.filter((item) => {
+      if (this.state.inStock) {
+        return item.name.toLowerCase().includes(searchTerm) && item.stocked;
+      } else {
+        return item.name.toLowerCase().includes(searchTerm);
+      }
+    });
   };
 
   render() {
     return (
       <div className="FilterableProductTable">
         <h1>IronStore</h1>
-        <SearchBar search={this.handleSearch} toggleStock={this.toggleStock} />
-        <ProductTable products={this.state.products} />
+        <SearchBar search={this.setSearchVal} toggleStock={this.toggleStock} />
+        <ProductTable products={this.filterList()} />
       </div>
     );
   }
