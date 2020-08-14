@@ -1,10 +1,27 @@
+.FilterableProductTable {
+  width: 70%;
+  margin: 0 auto;
+}
+
 .search {
   margin-bottom: 20px;
 }
 
+.search > div:first-child {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+input[name='searchQuery'] {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
 table {
-  width: 70%;
-  margin: 0 auto;
+  width: 100%;
 }
 
 thead {
