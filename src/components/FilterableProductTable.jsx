@@ -14,9 +14,9 @@ class FilterableProductTable extends Component {
     };
   }
 
-  setSearchVal = (value) => {
+  setSearchVal = (event) => {
     this.setState({
-      searchQuery: value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -41,7 +41,11 @@ class FilterableProductTable extends Component {
     return (
       <div className="FilterableProductTable">
         <h1>IronStore</h1>
-        <SearchBar search={this.setSearchVal} toggleStock={this.toggleStock} />
+        <SearchBar
+          searchVal={this.state.searchQuery}
+          search={this.setSearchVal}
+          toggleStock={this.toggleStock}
+        />
         <ProductTable products={this.filterList()} />
       </div>
     );

@@ -6,7 +6,9 @@ function SearchBar(props) {
       Search
       <input
         type="text"
-        onChange={(event) => props.search(event.target.value)}
+        name="searchQuery"
+        value={props.searchVal}
+        onChange={(event) => props.search(event)}
       />
       <input
         onChange={props.toggleStock}
